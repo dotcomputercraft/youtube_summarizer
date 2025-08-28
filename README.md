@@ -314,21 +314,6 @@ Illustrates the complete data processing pipeline from user input to final outpu
 
 Details the internal component interactions and interfaces.
 
-### Generating Diagram Images
-
-To generate PNG images from the PlantUML source files:
-
-```bash
-# Using manus-render-diagram utility (if available)
-manus-render-diagram diagrams/architecture.puml diagrams/architecture.png
-
-# Or using PlantUML directly
-java -jar plantuml.jar diagrams/*.puml
-
-# Or using online PlantUML server
-# Copy the .puml content to: http://www.plantuml.com/plantuml/uml/
-```
-
 ### Key Components
 
 #### CLI Layer (`src/cli.py`)

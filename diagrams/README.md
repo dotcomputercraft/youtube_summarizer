@@ -5,9 +5,11 @@ This folder contains PlantUML diagrams that illustrate the architecture and desi
 ## Diagram Files
 
 ### 1. Architecture Diagram (`architecture.puml`)
+
 **Purpose**: Shows the overall system architecture and component relationships.
 
 **Contents**:
+
 - External services (YouTube API, OpenAI API)
 - CLI interface layer with Click framework
 - Core application components
@@ -16,15 +18,18 @@ This folder contains PlantUML diagrams that illustrate the architecture and desi
 - Local storage components
 
 **Key Features Illustrated**:
+
 - Component separation and modularity
 - External API integrations
 - Data flow between layers
 - Storage and caching mechanisms
 
 ### 2. Data Flow Diagram (`data_flow.puml`)
+
 **Purpose**: Illustrates the complete data processing pipeline from user input to final output.
 
 **Contents**:
+
 - User input validation
 - Video ID extraction process
 - Transcript fetching workflow
@@ -34,15 +39,18 @@ This folder contains PlantUML diagrams that illustrate the architecture and desi
 - Error handling paths
 
 **Key Features Illustrated**:
+
 - Decision points and branching logic
 - Different command types (extract, summarize, batch, info)
 - Output format handling
 - Error conditions and recovery
 
 ### 3. Component Interaction Diagram (`component_diagram.puml`)
+
 **Purpose**: Details the internal component interactions and interfaces.
 
 **Contents**:
+
 - Interface definitions
 - Component internal structure
 - Inter-component communication
@@ -50,6 +58,7 @@ This folder contains PlantUML diagrams that illustrate the architecture and desi
 - Data flow annotations
 
 **Key Features Illustrated**:
+
 - Component responsibilities
 - Interface contracts
 - Dependency relationships
@@ -58,11 +67,13 @@ This folder contains PlantUML diagrams that illustrate the architecture and desi
 ## Viewing the Diagrams
 
 ### Option 1: Online PlantUML Server
+
 1. Copy the content of any `.puml` file
 2. Go to [PlantUML Online Server](http://www.plantuml.com/plantuml/uml/)
 3. Paste the content and view the rendered diagram
 
 ### Option 2: Local PlantUML Installation
+
 ```bash
 # Install PlantUML (requires Java)
 # Download from: https://plantuml.com/download
@@ -75,21 +86,15 @@ java -jar plantuml.jar -tsvg diagrams/*.puml
 ```
 
 ### Option 3: VS Code Extension
+
 1. Install the "PlantUML" extension in VS Code
 2. Open any `.puml` file
 3. Use `Alt+D` to preview the diagram
 
-### Option 4: Using manus-render-diagram (if available)
-```bash
-# Generate PNG from PlantUML
-manus-render-diagram diagrams/architecture.puml diagrams/architecture.png
-manus-render-diagram diagrams/data_flow.puml diagrams/data_flow.png
-manus-render-diagram diagrams/component_diagram.puml diagrams/component_diagram.png
-```
-
 ## Diagram Conventions
 
 ### Colors and Styling
+
 - **Blue**: CLI and user interface components
 - **Green**: Core processing logic
 - **Orange**: Data processing and transformation
@@ -97,6 +102,7 @@ manus-render-diagram diagrams/component_diagram.puml diagrams/component_diagram.
 - **Red**: Error conditions and handling
 
 ### Component Types
+
 - **Rectangles**: Application components
 - **Clouds**: External services
 - **Cylinders**: Data storage
@@ -104,6 +110,7 @@ manus-render-diagram diagrams/component_diagram.puml diagrams/component_diagram.
 - **Interfaces**: Component contracts
 
 ### Arrows and Connections
+
 - **Solid arrows**: Direct dependencies or data flow
 - **Dashed arrows**: Indirect relationships or "uses" relationships
 - **Thick arrows**: Primary data flow paths
@@ -129,6 +136,7 @@ When modifying the application architecture:
 ## Integration with Documentation
 
 These diagrams are referenced in:
+
 - `README.md` - Architecture overview section
 - `USAGE.md` - Technical implementation details
 - Code comments - Component-specific architecture notes
@@ -136,11 +144,13 @@ These diagrams are referenced in:
 ## Tools and Dependencies
 
 ### Required for Viewing
+
 - Web browser (for online PlantUML server)
 - Java 8+ (for local PlantUML installation)
 - VS Code with PlantUML extension (optional)
 
 ### Required for Editing
+
 - Text editor with PlantUML syntax highlighting
 - PlantUML preview capability
 - Basic understanding of PlantUML syntax
@@ -148,6 +158,7 @@ These diagrams are referenced in:
 ## PlantUML Syntax Reference
 
 For editing these diagrams, refer to:
+
 - [PlantUML Official Documentation](https://plantuml.com/)
 - [PlantUML Component Diagram Guide](https://plantuml.com/component-diagram)
 - [PlantUML Activity Diagram Guide](https://plantuml.com/activity-diagram-beta)
@@ -162,4 +173,3 @@ When contributing changes to the architecture:
 3. Ensure consistency across all diagrams
 4. Update this README if adding new diagram types
 5. Include diagram updates in pull requests
-
