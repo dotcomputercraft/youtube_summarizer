@@ -1,0 +1,116 @@
+@startuml YouTube_Video_Summarizer_Architecture
+
+!theme plain
+skinparam backgroundColor #FFFFFF
+skinparam componentStyle rectangle
+
+title YouTube Video Summarizer - Application Architecture
+
+' External Services
+cloud "YouTube API" as youtube {
+    [Video Transcripts]
+}
+
+cloud "OpenAI API" as openai {
+    [GPT-4o Model]
+}
+
+' User Interface Layer
+package "CLI Interface" as cli_layer {
+    [CLI Commands] as cli
+    [Click Framework] as click
+    [Colorama Output] as colorama
+    [Progress Bars] as tqdm
+}
+
+' Application Core
+package "Core Application" as core {
+    [TranscriptExtractor] as extractor
+    [Summarizer] as summarizer
+    [Configuration] as config
+}
+
+' Data Processing
+package "Data Processing" as processing {
+    [Text Cleaning] as cleaner
+    [Format Conversion] as formatter
+    [Batch Processing] as batch
+}
+
+' Output Layer
+package "Output Layer" as output {
+    [File Writer] as writer
+    [JSON Formatter] as json
+    [Markdown Formatter] as markdown
+    [SRT Formatter] as srt
+}
+
+' Storage
+database "Local Storage" as storage {
+    [Transcript Cache] as cache
+    [Output Files] as files
+    [Configuration Files] as conf_files
+}
+
+' User
+actor "User" as user
+
+' Relationships - User Interactions
+user --> cli : Commands
+cli --> click : Parse Arguments
+click --> config : Load Settings
+
+' Core Processing Flow
+cli --> extractor : Extract Transcript
+cli --> summarizer : Generate Summary
+cli --> batch : Process Multiple Videos
+
+' External API Calls
+extractor --> youtube : Fetch Transcripts
+summarizer --> openai : API Requests
+
+' Data Processing
+extractor --> cleaner : Clean Text
+summarizer --> formatter : Format Output
+
+' Output Generation
+formatter --> writer : Save Files
+formatter --> json : JSON Output
+formatter --> markdown : Markdown Output
+formatter --> srt : SRT Subtitles
+
+' Storage Operations
+writer --> files : Write Output
+extractor --> cache : Cache Transcripts
+config --> conf_files : Read Config
+
+' Visual Styling
+cli_layer -[#blue]-> core
+core -[#green]-> processing
+processing -[#orange]-> output
+output -[#purple]-> storage
+
+' Notes
+note right of youtube
+  YouTube Transcript API
+  - Multiple languages
+  - Auto-generated & manual
+  - Timestamp information
+end note
+
+note right of openai
+  OpenAI GPT-4o API
+  - Multiple summary styles
+  - Custom prompts
+  - Rate limiting
+end note
+
+note bottom of storage
+  Local file system
+  - Caching for performance
+  - Multiple output formats
+  - Configuration persistence
+end note
+
+@enduml
+

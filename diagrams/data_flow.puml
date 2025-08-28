@@ -1,0 +1,108 @@
+@startuml YouTube_Summarizer_Data_Flow
+
+!theme plain
+skinparam backgroundColor #FFFFFF
+skinparam activityStyle rectangle
+
+title YouTube Video Summarizer - Data Flow Diagram
+
+start
+
+:User provides YouTube URL/Video ID;
+
+if (Valid URL/Video ID?) then (yes)
+  :Extract Video ID from URL;
+else (no)
+  :Display Error Message;
+  stop
+endif
+
+:Check Available Transcripts;
+
+if (Transcripts Available?) then (yes)
+  :Select Best Language Match;
+else (no)
+  :Display "No Transcripts" Error;
+  stop
+endif
+
+:Fetch Transcript Data;
+note right
+  - YouTube Transcript API
+  - Multiple language support
+  - Timestamp information
+end note
+
+:Clean Transcript Text;
+note right
+  - Remove artifacts [Music], (inaudible)
+  - Fix whitespace and punctuation
+  - Normalize text format
+end note
+
+if (Command Type?) then (extract)
+  if (Output Format?) then (text)
+    :Return Plain Text;
+  elseif (json)
+    :Format as JSON with metadata;
+  elseif (srt)
+    :Convert to SRT subtitle format;
+  endif
+  :Save to file (if specified);
+  stop
+elseif (summarize)
+  :Send to OpenAI GPT-4o API;
+  note right
+    - Custom prompts based on style
+    - Rate limiting handling
+    - Error retry logic
+  end note
+  
+  :Receive AI Summary;
+  
+  if (Summary Style?) then (brief)
+    :2-3 sentence summary;
+  elseif (detailed)
+    :Comprehensive multi-paragraph;
+  elseif (bullet_points)
+    :Organized bullet list;
+  elseif (key_insights)
+    :Focus on main takeaways;
+  elseif (academic)
+    :Formal scholarly format;
+  elseif (casual)
+    :Conversational tone;
+  endif
+  
+  if (Output Format?) then (text)
+    :Return formatted text;
+  elseif (json)
+    :Include metadata and metrics;
+  elseif (markdown)
+    :Format with headers and structure;
+  endif
+  
+  :Save to file (if specified);
+  stop
+elseif (batch)
+  :Read URL list from file;
+  
+  :Process videos concurrently;
+  note right
+    - Configurable concurrency
+    - Progress tracking
+    - Error handling per video
+  end note
+  
+  :Aggregate results;
+  :Save batch output;
+  stop
+elseif (info)
+  :Display transcript information;
+  :Show available languages;
+  :Show generation status;
+  stop
+endif
+
+@enduml
+

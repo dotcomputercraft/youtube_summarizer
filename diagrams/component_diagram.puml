@@ -1,0 +1,141 @@
+@startuml YouTube_Summarizer_Components
+
+!theme plain
+skinparam backgroundColor #FFFFFF
+skinparam componentStyle rectangle
+
+title YouTube Video Summarizer - Component Interaction Diagram
+
+' Define interfaces
+interface "CLI Interface" as ICLI
+interface "Transcript API" as ITranscript
+interface "Summarization API" as ISummarize
+interface "File I/O" as IFileIO
+
+' Main Components
+component "CLI Controller" as CLI {
+    [Command Parser]
+    [Option Handler]
+    [Output Formatter]
+    [Error Handler]
+}
+
+component "Transcript Extractor" as Extractor {
+    [URL Parser]
+    [Video ID Extractor]
+    [Transcript Fetcher]
+    [Language Selector]
+    [Text Cleaner]
+}
+
+component "AI Summarizer" as Summarizer {
+    [OpenAI Client]
+    [Prompt Builder]
+    [Style Manager]
+    [Response Parser]
+    [Rate Limiter]
+}
+
+component "Batch Processor" as BatchProcessor {
+    [Concurrent Manager]
+    [Progress Tracker]
+    [Result Aggregator]
+    [Error Collector]
+}
+
+component "File Manager" as FileManager {
+    [Text Writer]
+    [JSON Formatter]
+    [Markdown Formatter]
+    [SRT Formatter]
+    [Config Reader]
+}
+
+' External Systems
+cloud "YouTube" as YouTube {
+    [Transcript Service]
+}
+
+cloud "OpenAI" as OpenAI {
+    [GPT-4o API]
+}
+
+database "File System" as FileSystem {
+    [Config Files]
+    [Output Files]
+    [Cache Files]
+}
+
+' User
+actor "User" as User
+
+' Connections
+User --> ICLI
+CLI --> ICLI
+
+CLI --> ITranscript
+Extractor --> ITranscript
+
+CLI --> ISummarize
+Summarizer --> ISummarize
+
+CLI --> IFileIO
+FileManager --> IFileIO
+
+' External connections
+Extractor --> YouTube : HTTP Requests
+Summarizer --> OpenAI : API Calls
+FileManager --> FileSystem : File Operations
+
+' Internal component interactions
+CLI ..> Extractor : uses
+CLI ..> Summarizer : uses
+CLI ..> BatchProcessor : uses
+CLI ..> FileManager : uses
+
+BatchProcessor ..> Extractor : parallel calls
+BatchProcessor ..> Summarizer : parallel calls
+
+' Data flow annotations
+note right of Extractor
+  Handles:
+  - URL validation
+  - Video ID extraction
+  - Transcript fetching
+  - Language selection
+  - Text cleaning
+end note
+
+note right of Summarizer
+  Handles:
+  - API authentication
+  - Prompt generation
+  - Style application
+  - Response processing
+  - Error handling
+end note
+
+note right of BatchProcessor
+  Handles:
+  - Concurrent processing
+  - Progress tracking
+  - Result collection
+  - Error aggregation
+end note
+
+note right of FileManager
+  Handles:
+  - Multiple output formats
+  - File writing
+  - Configuration loading
+  - Path management
+end note
+
+' Styling
+CLI -[#blue]-> Extractor
+CLI -[#green]-> Summarizer
+CLI -[#orange]-> BatchProcessor
+CLI -[#purple]-> FileManager
+
+@enduml
+
